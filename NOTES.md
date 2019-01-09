@@ -44,3 +44,49 @@ public boolean onCreateOptionsMenu(...){
     getMenuInflater().inflate()(R.menu.main, menu);
     return true;
 }
+
+In general use "app" namespace in XML to be compatible with old devices (SDK Levels)
+
+
+Build an URL:
+public static URL buildUrl(String githubSearchQuery) {
+        Uri buildUri = Uri.parse(GITHUB_BASE_URL).buildUpon()
+                .appendQueryParameter(PARAM_QUERY, githubSearchQuery)
+                .build();
+        URL url = null;
+        try {
+            url = new URL(buildUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return url;
+    }
+
+Make HTTP Call with build in HttpURLConnection
+
+public static String getResponseFromHttpUrl(URL url) throws IOException {
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        try {
+            InputStream in = urlConnection.getInputStream();
+
+            Scanner scanner = new Scanner(in);
+            scanner.useDelimiter("\\A");
+
+            boolean hasInput = scanner.hasNext();
+            if (hasInput) {
+                return scanner.next();
+            } else {
+                return null;
+            }
+        } finally {
+            urlConnection.disconnect();
+        }
+    }
+
+
+permission docs: https://developer.android.com/guide/topics/permissions/overview
+
+
+Threading via AsyncTask:
+On main thread: onPreExecute, execute, "UI Thread", OnPostExecute, onProgressUpdate
+On Background thread: doInBackground, publishProgress
