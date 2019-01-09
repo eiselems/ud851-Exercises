@@ -30,3 +30,17 @@ The most common ones seem to be FrameLayout, LinearLayout and ConstraintLayout.
 FrameLayout: Great when you only have one child view e.g ListView that fills entire content area
 LinearLayout: Perfectly for stacking vertically/horizontally different views
 ConstraintLayout: Powerful but more complicated than others
+
+
+Resource Folder Android Doc: https://developer.android.com/guide/topics/resources/providing-resources
+
+Accessing Strings Examples:
+Programatically: String myString = getString(R.string.today);
+In UI (XML): <TextView text=”@string/today” />
+
+To create a menu:
+Override onCreateOptionsMenu within Activity:
+public boolean onCreateOptionsMenu(...){
+    getMenuInflater().inflate()(R.menu.main, menu);
+    return true;
+}
